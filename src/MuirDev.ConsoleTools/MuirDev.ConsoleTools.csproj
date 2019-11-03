@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>8.0</LangVersion>
+    <Authors>erikdmuir</Authors>
+    <Company>MuirDev</Company>
+    <Product>ConsoleTools</Product>
+    <Description>A .NET Standard class library for console apps to help customize logging and facilitate user interaction.</Description>
+    <Copyright>Copyright © 2019</Copyright>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/ErikMuir/MuirDev.ConsoleTools</RepositoryUrl>
+    <PackageId>MuirDev.ConsoleTools</PackageId>
+    <PackageIcon>icon.jpeg</PackageIcon>
+    <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
+    <PackageTags>console dotnet logging confirm menu</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1.0</Version>
+    <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="icon.jpeg" Pack="true" Visible="false" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
