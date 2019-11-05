@@ -6,7 +6,7 @@
     <Authors>erikdmuir</Authors>
     <Company>MuirDev</Company>
     <Product>ConsoleTools</Product>
-    <Description>A .NET Standard class library for console apps to help customize logging and facilitate user interaction.</Description>
+    <Description>A .NET Standard class library for console apps to help customize output and facilitate user interaction.</Description>
     <Copyright>Copyright © 2019</Copyright>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/ErikMuir/MuirDev.ConsoleTools</RepositoryUrl>
