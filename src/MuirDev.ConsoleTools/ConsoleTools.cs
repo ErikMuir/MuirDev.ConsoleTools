@@ -140,6 +140,13 @@ namespace MuirDev.ConsoleTools
         /// Logs a <paramref>message</paramref> of the specified <paramref>type</paramref> to the console using provided <paramref>options</paramref>.
         /// </summary>
         /// <param name="message">The message to be output to the console.</param>
+        /// <param name="options">Log options to override default logging behavior.</param>
+        public static void Log(string message, LogOptions options) => Log(message, LogType.Info, options);
+
+        /// <summary>
+        /// Logs a <paramref>message</paramref> of the specified <paramref>type</paramref> to the console using provided <paramref>options</paramref>.
+        /// </summary>
+        /// <param name="message">The message to be output to the console.</param>
         /// <param name="type">The log type of the message.</param>
         /// <param name="options">Log options to override default logging behavior.</param>
         public static void Log(string message, LogType type, LogOptions options)
