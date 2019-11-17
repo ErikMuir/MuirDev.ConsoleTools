@@ -79,6 +79,12 @@ namespace MuirDev.ConsoleTools
         /// <summary>
         /// Displays the menu, prompts the user for a response, and returns the response.
         /// </summary>
+        /// <param name="options">Log options to override default logging behavior.</param>
+        public char Run(LogOptions options) => Run(LogType.Info, options);
+
+        /// <summary>
+        /// Displays the menu, prompts the user for a response, and returns the response.
+        /// </summary>
         /// <param name="type">The log type of the menu.</param>
         /// <param name="options">Log options to override default logging behavior.</param>
         public char Run(LogType type, LogOptions options)

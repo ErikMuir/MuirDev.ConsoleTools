@@ -74,6 +74,12 @@ namespace MuirDev.ConsoleTools
         /// <summary>
         /// Prompts the user to answer a yes or no question.
         /// </summary>
+        /// <param name="options">Log options to override default logging behavior.</param>
+        public bool Run(LogOptions options) => Run(LogType.Info, options);
+
+        /// <summary>
+        /// Prompts the user to answer a yes or no question.
+        /// </summary>
         /// <param name="type">The log type of the message.</param>
         /// <param name="options">Log options to override default logging behavior.</param>
         public bool Run(LogType type, LogOptions options)
