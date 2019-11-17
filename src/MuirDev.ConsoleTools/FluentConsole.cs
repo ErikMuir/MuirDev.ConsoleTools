@@ -5,12 +5,171 @@ using System.Text;
 namespace MuirDev.ConsoleTools
 {
     /// <summary>
-    /// Wraps the System.Console static class with a fluent pattern,
-    /// and includes additional functionality around logging.
+    /// Wraps the System.Console static class with a fluent pattern, and includes additional functionality around logging.
     /// </summary>
     public class FluentConsole
     {
         public FluentConsole() { }
+
+        #region -- Additional Functionality --
+
+        /// <summary>
+        /// Logs a specified <paramref>count</paramref> of newline characters to the console.
+        /// </summary>
+        /// <param name="count">The desired number of newlines to output to the console. Defaults to 1.</param>
+        public FluentConsole LineFeed(int count = 1)
+        {
+            while (count-- > 0) WriteLine();
+            return this;
+        }
+
+        /// <summary>
+        /// Returns a horizontal line to be used as a separator.
+        /// </summary>
+        public string Separator => new string('-', BufferWidth - 1);
+
+        /// <summary>
+        /// Outputs a horizontal line to be used as a separator.
+        /// </summary>
+        public FluentConsole LogSeparator() => Log(Separator, LogType.Info, new LogOptions());
+
+        /// <summary>
+        /// Outputs a horizontal line to be used as a separator.
+        /// </summary>
+        /// <param name="type">The desired log type.</param>
+        public FluentConsole LogSeparator(LogType type) => Log(Separator, type, new LogOptions());
+
+        /// <summary>
+        /// Outputs a horizontal line to be used as a separator.
+        /// </summary>
+        /// <param name="type">The desired log type.</param>
+        /// <param name="options">The log options to be used.</param>
+        public FluentConsole LogSeparator(LogType type, LogOptions options) => Log(Separator, type, options);
+
+        /// <summary>
+        /// Sets the colors of the console output based on the desired log type.
+        /// </summary>
+        public FluentConsole SetColor() => SetColor(LogType.Info, new LogOptions());
+
+        /// <summary>
+        /// Sets the colors of the console output based on the desired log type.
+        /// </summary>
+        /// <param name="type">The desired log type.</param>
+        public FluentConsole SetColor(LogType type) => SetColor(type, new LogOptions());
+
+        /// <summary>
+        /// Sets the colors of the console output based on the desired log type and log options.
+        /// </summary>
+        /// <param name="type">The desired log type.</param>
+        /// <param name="options">The log options to be used.</param>
+        public FluentConsole SetColor(LogType type, LogOptions options)
+        {
+            ForegroundColor = options?.ForegroundColor ?? GetTypeColor(type);
+            BackgroundColor = options?.BackgroundColor ?? ConsoleColor.Black;
+            return this;
+        }
+
+        /// <summary>
+        /// Returns the text color associated with the provided <paramref>type</paramref>.
+        /// </summary>
+        /// <param name="type">The desired log type.</param>
+        public ConsoleColor GetTypeColor(LogType type) => type switch
+        {
+            LogType.Info => ConsoleColor.Gray,
+            LogType.Success => ConsoleColor.DarkGreen,
+            LogType.Warning => ConsoleColor.DarkYellow,
+            LogType.Failure => ConsoleColor.DarkRed,
+            _ => throw new NotImplementedException(),
+        };
+
+        /// <summary>
+        /// Logs an Info <paramref>message</paramref> to the console.
+        /// </summary>
+        /// <param name="message">The message to be output to the console.</param>
+        public FluentConsole Info(string message) => Log(message, LogType.Info, new LogOptions());
+
+        /// <summary>
+        /// Logs an Info <paramref>message</paramref> to the console using provided <paramref>options</paramref>.
+        /// </summary>
+        /// <param name="message">The message to be output to the console.</param>
+        /// <param name="options">Log options to override default logging behavior.</param>
+        public FluentConsole Info(string message, LogOptions options) => Log(message, LogType.Info, options);
+
+        /// <summary>
+        /// Logs a Success <paramref>message</paramref> to the console.
+        /// </summary>
+        /// <param name="message">The message to be output to the console.</param>
+        public FluentConsole Success(string message) => Log(message, LogType.Success, new LogOptions());
+
+        /// <summary>
+        /// Logs a Success <paramref>message</paramref> to the console using provided <paramref>options</paramref>.
+        /// </summary>
+        /// <param name="message">The message to be output to the console.</param>
+        /// <param name="options">Log options to override default logging behavior.</param>
+        public FluentConsole Success(string message, LogOptions options) => Log(message, LogType.Success, options);
+
+        /// <summary>
+        /// Logs a Warning <paramref>message</paramref> to the console.
+        /// </summary>
+        /// <param name="message">The message to be output to the console.</param>
+        public FluentConsole Warning(string message) => Log(message, LogType.Warning, new LogOptions());
+
+        /// <summary>
+        /// Logs a Warning <paramref>message</paramref> to the console using provided <paramref>options</paramref>.
+        /// </summary>
+        /// <param name="message">The message to be output to the console.</param>
+        /// <param name="options">Log options to override default logging behavior.</param>
+        public FluentConsole Warning(string message, LogOptions options) => Log(message, LogType.Warning, options);
+
+        /// <summary>
+        /// Logs a Failure <paramref>message</paramref> to the console.
+        /// </summary>
+        /// <param name="message">The message to be output to the console.</param>
+        public FluentConsole Failure(string message) => Log(message, LogType.Failure, new LogOptions());
+
+        /// <summary>
+        /// Logs a Failure <paramref>message</paramref> to the console using provided <paramref>options</paramref>.
+        /// </summary>
+        /// <param name="message">The message to be output to the console.</param>
+        /// <param name="options">Log options to override default logging behavior.</param>
+        public FluentConsole Failure(string message, LogOptions options) => Log(message, LogType.Failure, options);
+
+        /// <summary>
+        /// Logs a <paramref>message</paramref> to the console.
+        /// </summary>
+        /// <param name="message">The message to be output to the console.</param>
+        public FluentConsole Log(string message) => Log(message, LogType.Info, new LogOptions());
+
+        /// <summary>
+        /// Logs a <paramref>message</paramref> of the specified <paramref>type</paramref> to the console.
+        /// </summary>
+        /// <param name="message">The message to be output to the console.</param>
+        /// <param name="type">The log type of the message.</param>
+        public FluentConsole Log(string message, LogType type) => Log(message, type, new LogOptions());
+
+        /// <summary>
+        /// Logs a <paramref>message</paramref> of the specified <paramref>type</paramref> to the console using provided <paramref>options</paramref>.
+        /// </summary>
+        /// <param name="message">The message to be output to the console.</param>
+        /// <param name="options">Log options to override default logging behavior.</param>
+        public FluentConsole Log(string message, LogOptions options) => Log(message, LogType.Info, options);
+
+        /// <summary>
+        /// Logs a <paramref>message</paramref> of the specified <paramref>type</paramref> to the console using provided <paramref>options</paramref>.
+        /// </summary>
+        /// <param name="message">The message to be output to the console.</param>
+        /// <param name="type">The log type of the message.</param>
+        /// <param name="options">Log options to override default logging behavior.</param>
+        public FluentConsole Log(string message, LogType type, LogOptions options)
+        {
+            SetColor(type, options).Write(message);
+            if (options?.IsEndOfLine ?? true)
+                WriteLine();
+            ResetColor();
+            return this;
+        }
+
+        #endregion
 
         #region -- Console Wrappers --
 
@@ -292,166 +451,6 @@ namespace MuirDev.ConsoleTools
         public FluentConsole WriteLine(char value)
         {
             Console.WriteLine(value);
-            return this;
-        }
-
-        #endregion
-
-        #region -- Additional Functionality --
-
-        /// <summary>
-        /// Logs a specified <paramref>count</paramref> of newline characters to the console.
-        /// </summary>
-        /// <param name="count">The desired number of newlines to output to the console. Defaults to 1.</param>
-        public FluentConsole LineFeed(int count = 1)
-        {
-            while (count-- > 0) WriteLine();
-            return this;
-        }
-
-        /// <summary>
-        /// Returns a horizontal line to be used as a separator.
-        /// </summary>
-        public string Separator => new string('-', BufferWidth - 1);
-
-        /// <summary>
-        /// Outputs a horizontal line to be used as a separator.
-        /// </summary>
-        public FluentConsole LogSeparator() => Log(Separator, LogType.Info, new LogOptions());
-
-        /// <summary>
-        /// Outputs a horizontal line to be used as a separator.
-        /// </summary>
-        /// <param name="type">The desired log type.</param>
-        public FluentConsole LogSeparator(LogType type) => Log(Separator, type, new LogOptions());
-
-        /// <summary>
-        /// Outputs a horizontal line to be used as a separator.
-        /// </summary>
-        /// <param name="type">The desired log type.</param>
-        /// <param name="options">The log options to be used.</param>
-        public FluentConsole LogSeparator(LogType type, LogOptions options) => Log(Separator, type, options);
-
-        /// <summary>
-        /// Sets the colors of the console output based on the desired log type.
-        /// </summary>
-        public FluentConsole SetColor() => SetColor(LogType.Info, new LogOptions());
-
-        /// <summary>
-        /// Sets the colors of the console output based on the desired log type.
-        /// </summary>
-        /// <param name="type">The desired log type.</param>
-        public FluentConsole SetColor(LogType type) => SetColor(type, new LogOptions());
-
-        /// <summary>
-        /// Sets the colors of the console output based on the desired log type and log options.
-        /// </summary>
-        /// <param name="type">The desired log type.</param>
-        /// <param name="options">The log options to be used.</param>
-        public FluentConsole SetColor(LogType type, LogOptions options)
-        {
-            ForegroundColor = options?.ForegroundColor ?? GetTypeColor(type);
-            BackgroundColor = options?.BackgroundColor ?? ConsoleColor.Black;
-            return this;
-        }
-
-        /// <summary>
-        /// Returns the text color associated with the provided <paramref>type</paramref>.
-        /// </summary>
-        /// <param name="type">The desired log type.</param>
-        public ConsoleColor GetTypeColor(LogType type) => type switch
-        {
-            LogType.Info => ConsoleColor.Gray,
-            LogType.Success => ConsoleColor.DarkGreen,
-            LogType.Warning => ConsoleColor.DarkYellow,
-            LogType.Failure => ConsoleColor.DarkRed,
-            _ => throw new NotImplementedException(),
-        };
-
-        /// <summary>
-        /// Logs an Info <paramref>message</paramref> to the console.
-        /// </summary>
-        /// <param name="message">The message to be output to the console.</param>
-        public FluentConsole Info(string message) => Log(message, LogType.Info, new LogOptions());
-
-        /// <summary>
-        /// Logs an Info <paramref>message</paramref> to the console using provided <paramref>options</paramref>.
-        /// </summary>
-        /// <param name="message">The message to be output to the console.</param>
-        /// <param name="options">Log options to override default logging behavior.</param>
-        public FluentConsole Info(string message, LogOptions options) => Log(message, LogType.Info, options);
-
-        /// <summary>
-        /// Logs a Success <paramref>message</paramref> to the console.
-        /// </summary>
-        /// <param name="message">The message to be output to the console.</param>
-        public FluentConsole Success(string message) => Log(message, LogType.Success, new LogOptions());
-
-        /// <summary>
-        /// Logs a Success <paramref>message</paramref> to the console using provided <paramref>options</paramref>.
-        /// </summary>
-        /// <param name="message">The message to be output to the console.</param>
-        /// <param name="options">Log options to override default logging behavior.</param>
-        public FluentConsole Success(string message, LogOptions options) => Log(message, LogType.Success, options);
-
-        /// <summary>
-        /// Logs a Warning <paramref>message</paramref> to the console.
-        /// </summary>
-        /// <param name="message">The message to be output to the console.</param>
-        public FluentConsole Warning(string message) => Log(message, LogType.Warning, new LogOptions());
-
-        /// <summary>
-        /// Logs a Warning <paramref>message</paramref> to the console using provided <paramref>options</paramref>.
-        /// </summary>
-        /// <param name="message">The message to be output to the console.</param>
-        /// <param name="options">Log options to override default logging behavior.</param>
-        public FluentConsole Warning(string message, LogOptions options) => Log(message, LogType.Warning, options);
-
-        /// <summary>
-        /// Logs a Failure <paramref>message</paramref> to the console.
-        /// </summary>
-        /// <param name="message">The message to be output to the console.</param>
-        public FluentConsole Failure(string message) => Log(message, LogType.Failure, new LogOptions());
-
-        /// <summary>
-        /// Logs a Failure <paramref>message</paramref> to the console using provided <paramref>options</paramref>.
-        /// </summary>
-        /// <param name="message">The message to be output to the console.</param>
-        /// <param name="options">Log options to override default logging behavior.</param>
-        public FluentConsole Failure(string message, LogOptions options) => Log(message, LogType.Failure, options);
-
-        /// <summary>
-        /// Logs a <paramref>message</paramref> to the console.
-        /// </summary>
-        /// <param name="message">The message to be output to the console.</param>
-        public FluentConsole Log(string message) => Log(message, LogType.Info, new LogOptions());
-
-        /// <summary>
-        /// Logs a <paramref>message</paramref> of the specified <paramref>type</paramref> to the console.
-        /// </summary>
-        /// <param name="message">The message to be output to the console.</param>
-        /// <param name="type">The log type of the message.</param>
-        public FluentConsole Log(string message, LogType type) => Log(message, type, new LogOptions());
-
-        /// <summary>
-        /// Logs a <paramref>message</paramref> of the specified <paramref>type</paramref> to the console using provided <paramref>options</paramref>.
-        /// </summary>
-        /// <param name="message">The message to be output to the console.</param>
-        /// <param name="options">Log options to override default logging behavior.</param>
-        public FluentConsole Log(string message, LogOptions options) => Log(message, LogType.Info, options);
-
-        /// <summary>
-        /// Logs a <paramref>message</paramref> of the specified <paramref>type</paramref> to the console using provided <paramref>options</paramref>.
-        /// </summary>
-        /// <param name="message">The message to be output to the console.</param>
-        /// <param name="type">The log type of the message.</param>
-        /// <param name="options">Log options to override default logging behavior.</param>
-        public FluentConsole Log(string message, LogType type, LogOptions options)
-        {
-            SetColor(type, options).Write(message);
-            if (options?.IsEndOfLine ?? true)
-                WriteLine();
-            ResetColor();
             return this;
         }
 
