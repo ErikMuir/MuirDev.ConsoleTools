@@ -89,38 +89,36 @@ namespace MuirDev.ConsoleTools
         /// <param name="options">Log options to override default logging behavior.</param>
         public char Run(LogType type, LogOptions options)
         {
+            var console = new FluentConsole();
+
             options = options ?? new LogOptions();
             options.IsEndOfLine = true;
 
-            ConsoleTools.LogSeparator(type, options);
+            console.LogSeparator(type, options);
             if (!string.IsNullOrWhiteSpace(_title))
             {
-                ConsoleTools.Log($" {_title}", type, options);
-                ConsoleTools.LogSeparator(type, options);
+                console.Log($" {_title}", type, options).LogSeparator(type, options);
             }
             if (!string.IsNullOrWhiteSpace(_detail))
             {
-                ConsoleTools.Log(_detail, type, options);
-                Console.WriteLine();
+                console.Log(_detail, type, options).WriteLine();
             }
             foreach (KeyValuePair<char, string> option in _options)
             {
-                ConsoleTools.Log($"  {option.Key} - {option.Value}", type, options);
+                console.Log($"  {option.Key} - {option.Value}", type, options);
             }
-            ConsoleTools.LogSeparator(type, options);
-            Console.WriteLine();
+            console.LogSeparator(type, options).WriteLine();
 
-            var left = Console.CursorLeft;
-            var top = Console.CursorTop;
+            var left = console.CursorLeft;
+            var top = console.CursorTop;
             options.IsEndOfLine = false;
             var response = char.MinValue;
             do
             {
-                Console.SetCursorPosition(left, top);
-                ConsoleTools.Log("Make your selection:  \b", type, options);
-                response = Console.ReadKey().KeyChar;
+                console.SetCursorPosition(left, top).Log("Make your selection:  \b", type, options);
+                response = console.ReadKey().KeyChar;
             } while (!_options.ContainsKey(response));
-            Console.WriteLine();
+            console.WriteLine();
 
             return response;
         }

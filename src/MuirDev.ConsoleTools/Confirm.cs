@@ -84,14 +84,15 @@ namespace MuirDev.ConsoleTools
         /// <param name="options">Log options to override default logging behavior.</param>
         public bool Run(LogType type, LogOptions options)
         {
+            var console = new FluentConsole();
             options = options ?? new LogOptions();
             options.IsEndOfLine = false;
             ConsoleKey response;
             do
             {
-                ConsoleTools.Log(_question, type, options);
-                response = Console.ReadKey(false).Key;
-                Console.WriteLine();
+                console.Log(_question, type, options);
+                response = console.ReadKey(false).Key;
+                console.WriteLine();
             } while (!_allowedResponses.ContainsKey(response));
             return _allowedResponses[response];
         }
