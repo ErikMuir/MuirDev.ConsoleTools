@@ -201,8 +201,6 @@ namespace MuirDev.ConsoleTools
         public int WindowTop { get { return Console.WindowTop; } set { Console.WindowTop = value; } }
         public ConsoleColor BackgroundColor { get { return Console.BackgroundColor; } set { Console.BackgroundColor = value; } }
 
-        public event ConsoleCancelEventHandler CancelKeyPress;
-
         public FluentConsole Beep()
         {
             Console.Beep();
