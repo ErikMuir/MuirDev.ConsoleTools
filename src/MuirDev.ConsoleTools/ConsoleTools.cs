@@ -2,6 +2,7 @@ using System;
 
 namespace MuirDev.ConsoleTools
 {
+    [Obsolete("This will be removed in a future release. Please use FluentConsole instead.", false)]
     public static class ConsoleTools
     {
         /// <summary>
