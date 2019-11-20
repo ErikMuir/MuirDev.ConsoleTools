@@ -1,3 +1,3 @@
 # MuirDev.ConsoleTools
 
-https://www.nuget.org/packages/MuirDev.ConsoleTools/0.2.1
+https://www.nuget.org/packages/MuirDev.ConsoleTools/0.2.2

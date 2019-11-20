@@ -9,6 +9,11 @@ namespace MuirDev.ConsoleTools
     {
         public LogOptions() { }
 
+        public LogOptions(bool isEndOfLine)
+        {
+            IsEndOfLine = isEndOfLine;
+        }
+
         public LogOptions(ConsoleColor foregroundColor, bool isEndOfLine = true)
         {
             ForegroundColor = foregroundColor;

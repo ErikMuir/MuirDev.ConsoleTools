@@ -1,3 +1,9 @@
+## 0.2.2 - Tue, 19 Nov 2019
+
+- Add another constructor for LogOptions
+
+<br>
+
 ## 0.2.1 - Tue, 19 Nov 2019
 
 - Add Multiple constructors for LogOptions

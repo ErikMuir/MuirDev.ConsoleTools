@@ -15,7 +15,7 @@
     <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
     <PackageTags>console dotnet logging confirm menu fluent</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.2.1</Version>
+    <Version>0.2.2</Version>
     <PackageReleaseNotes>Multiple constructors for LogOptions</PackageReleaseNotes>
   </PropertyGroup>
 
