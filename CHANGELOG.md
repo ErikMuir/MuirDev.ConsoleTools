@@ -1,3 +1,9 @@
+## 0.2.1 - Tue, 19 Nov 2019
+
+- Add Multiple constructors for LogOptions
+
+<br>
+
 ## 0.2.0 - Sun, 17 Nov 2019
 
 - Add FluentConsole

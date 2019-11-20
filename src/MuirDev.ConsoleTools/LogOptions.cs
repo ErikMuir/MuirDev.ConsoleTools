@@ -7,8 +7,23 @@ namespace MuirDev.ConsoleTools
     /// </summary>
     public class LogOptions
     {
+        public LogOptions() { }
+
+        public LogOptions(ConsoleColor foregroundColor, bool isEndOfLine = true)
+        {
+            ForegroundColor = foregroundColor;
+            IsEndOfLine = isEndOfLine;
+        }
+
+        public LogOptions(ConsoleColor foregroundColor, ConsoleColor backgroundColor, bool isEndOfLine = true)
+        {
+            ForegroundColor = foregroundColor;
+            BackgroundColor = backgroundColor;
+            IsEndOfLine = isEndOfLine;
+        }
+
         /// <summary>
-        /// Determines whether or not a newline character is appended to the message.
+        /// Determines whether or not a newline character is appended to the message. Defaults to true.
         /// </summary>
         public bool IsEndOfLine { get; set; } = true;
 
