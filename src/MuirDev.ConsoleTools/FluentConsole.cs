@@ -24,27 +24,20 @@ namespace MuirDev.ConsoleTools
         }
 
         /// <summary>
-        /// Returns a horizontal line to be used as a separator.
-        /// </summary>
-        public string Separator => new string('-', BufferWidth - 1);
-
-        /// <summary>
-        /// Outputs a horizontal line to be used as a separator.
-        /// </summary>
-        public FluentConsole LogSeparator() => Log(Separator, LogType.Info, new LogOptions());
-
-        /// <summary>
         /// Outputs a horizontal line to be used as a separator.
         /// </summary>
         /// <param name="type">The desired log type.</param>
-        public FluentConsole LogSeparator(LogType type) => Log(Separator, type, new LogOptions());
+        /// <param name="options">The log options to be used.</param>
+        public FluentConsole LogSeparator(LogType type = LogType.Info, LogOptions options = null)
+            => Log(new string('-', Math.Min(BufferWidth - 1, 80)), type, options);
 
         /// <summary>
         /// Outputs a horizontal line to be used as a separator.
         /// </summary>
         /// <param name="type">The desired log type.</param>
         /// <param name="options">The log options to be used.</param>
-        public FluentConsole LogSeparator(LogType type, LogOptions options) => Log(Separator, type, options);
+        public FluentConsole LogSeparatorFullWidth(LogType type = LogType.Info, LogOptions options = null)
+            => Log(new string('-', BufferWidth - 1), type, options);
 
         /// <summary>
         /// Sets the colors of the console output based on the desired log type.
