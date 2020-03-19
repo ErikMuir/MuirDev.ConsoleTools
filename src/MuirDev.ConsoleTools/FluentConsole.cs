@@ -58,7 +58,7 @@ namespace MuirDev.ConsoleTools
         public FluentConsole SetColor(LogType type, LogOptions options)
         {
             ForegroundColor = options?.ForegroundColor ?? GetTypeColor(type);
-            BackgroundColor = options?.BackgroundColor ?? ConsoleColor.Black;
+            BackgroundColor = options?.BackgroundColor ?? Console.BackgroundColor;
             return this;
         }
 
