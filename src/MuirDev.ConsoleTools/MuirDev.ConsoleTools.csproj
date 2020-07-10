@@ -15,8 +15,8 @@
     <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
     <PackageTags>console dotnet logging confirm menu fluent</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.2.3</Version>
-    <PackageReleaseNotes>Bugfix: use default bg color instead of always black</PackageReleaseNotes>
+    <Version>0.3.0</Version>
+    <PackageReleaseNotes>Feature: add WaitForKeyPress and WaitForEnter methods to FluentConsole</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

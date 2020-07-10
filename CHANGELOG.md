@@ -1,3 +1,10 @@
+## 0.3.0 - Thu, 09 Jul 2020
+
+- Add method WaitForKeyPress to FluentConsole
+- Add method WaitForEnter to FluentConsole
+
+<br>
+
 ## 0.2.2 - Tue, 19 Nov 2019
 
 - Add another constructor for LogOptions

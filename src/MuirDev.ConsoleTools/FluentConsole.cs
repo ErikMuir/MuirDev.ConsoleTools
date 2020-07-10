@@ -229,6 +229,16 @@ namespace MuirDev.ConsoleTools
         public ConsoleKeyInfo ReadKey(bool intercept) => Console.ReadKey(intercept);
         public ConsoleKeyInfo ReadKey() => Console.ReadKey();
         public string ReadLine() => Console.ReadLine();
+        public FluentConsole WaitForKeyPress()
+        {
+            Console.ReadKey(true);
+            return this;
+        }
+        public FluentConsole WaitForEnter()
+        {
+            Console.ReadLine();
+            return this;
+        }
         public FluentConsole ResetColor()
         {
             Console.ResetColor();
