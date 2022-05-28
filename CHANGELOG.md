@@ -1,7 +1,8 @@
 # Changelog
 
-## 0.4.0 - Sat, 28 May 2022
+## 1.0.0 - Sat, 28 May 2022
 
+- Migrate to net6.0
 - Add method SetEncoding to FluentConsole
 
 <br>

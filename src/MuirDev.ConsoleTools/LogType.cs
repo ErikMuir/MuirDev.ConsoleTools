@@ -1,10 +1,9 @@
-namespace MuirDev.ConsoleTools
+namespace MuirDev.ConsoleTools;
+
+public enum LogType
 {
-    public enum LogType
-    {
-        Info,
-        Success,
-        Warning,
-        Failure,
-    }
+    Info,
+    Success,
+    Warning,
+    Failure,
 }
