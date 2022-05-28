@@ -7,7 +7,7 @@
     <Company>MuirDev</Company>
     <Product>ConsoleTools</Product>
     <Description>A .NET Standard class library for console apps to help customize output and facilitate user interaction in a fluent manner.</Description>
-    <Copyright>Copyright © 2020</Copyright>
+    <Copyright>Copyright © 2022</Copyright>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/ErikMuir/MuirDev.ConsoleTools</RepositoryUrl>
     <PackageId>MuirDev.ConsoleTools</PackageId>
@@ -15,8 +15,8 @@
     <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
     <PackageTags>console dotnet logging confirm menu fluent</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.3.0</Version>
-    <PackageReleaseNotes>Feature: add WaitForKeyPress and WaitForEnter methods to FluentConsole</PackageReleaseNotes>
+    <Version>0.4.0</Version>
+    <PackageReleaseNotes>Feature: add SetEncoding method to FluentConsole</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,3 +1,11 @@
+# Changelog
+
+## 0.4.0 - Sat, 28 May 2022
+
+- Add method SetEncoding to FluentConsole
+
+<br>
+
 ## 0.3.0 - Thu, 09 Jul 2020
 
 - Add method WaitForKeyPress to FluentConsole

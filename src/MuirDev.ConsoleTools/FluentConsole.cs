@@ -40,6 +40,16 @@ namespace MuirDev.ConsoleTools
             => Log(new string('-', BufferWidth - 1), type, options);
 
         /// <summary>
+        /// Sets the output encoding.
+        /// </summary>
+        /// <param name="encoding">The desired output encoding.</param>
+        public FluentConsole SetEncoding(Encoding encoding)
+        {
+            OutputEncoding = encoding;
+            return this;
+        }
+
+        /// <summary>
         /// Sets the colors of the console output based on the desired log type.
         /// </summary>
         public FluentConsole SetColor() => SetColor(LogType.Info, new LogOptions());
