@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <LangVersion>10.0</LangVersion>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>12.0</LangVersion>
     <Authors>erikdmuir</Authors>
     <Company>MuirDev</Company>
     <Product>ConsoleTools</Product>
     <Description>A .NET Standard class library for console apps to help customize output and facilitate user interaction in a fluent manner.</Description>
-    <Copyright>Copyright © 2022</Copyright>
+    <Copyright>Copyright © 2024</Copyright>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/ErikMuir/MuirDev.ConsoleTools</RepositoryUrl>
     <PackageId>MuirDev.ConsoleTools</PackageId>
@@ -15,8 +15,8 @@
     <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
     <PackageTags>console dotnet logging confirm menu fluent</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.0</Version>
-    <PackageReleaseNotes>Feature: migrate to net6.0</PackageReleaseNotes>
+    <Version>1.1.0</Version>
+    <PackageReleaseNotes>Migrate to net8.0</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

@@ -19,7 +19,7 @@ public class Confirm
         if (string.IsNullOrWhiteSpace(question))
             throw new ArgumentException("Question is required.");
 
-        if (!question.Contains("?"))
+        if (!question.Contains('?'))
             question += "?";
         question += " [y/n] ";
 
@@ -42,9 +42,9 @@ public class Confirm
         if (string.IsNullOrWhiteSpace(question))
             throw new ArgumentException("Question is required.");
 
-        if (!question.Contains("?"))
+        if (!question.Contains('?'))
             question += "?";
-        question += (defaultResponse ? " [Y/n] " : " [y/N] ");
+        question += defaultResponse ? " [Y/n] " : " [y/N] ";
 
         _question = question;
         _allowedResponses = new Dictionary<ConsoleKey, bool>
@@ -82,7 +82,7 @@ public class Confirm
     public bool Run(LogType type, LogOptions options)
     {
         var console = new FluentConsole();
-        options = options ?? new LogOptions();
+        options ??= new LogOptions();
         options.IsEndOfLine = false;
         ConsoleKey response;
         do

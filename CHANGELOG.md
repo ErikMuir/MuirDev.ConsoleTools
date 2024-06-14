@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.0 - Wed, 12 Jun 2024
+
+- Migrate to net8.0
+- Remove OS-specific methods and properties from FluentConsole
+
 ## 1.0.0 - Sat, 28 May 2022
 
 - Migrate to net6.0

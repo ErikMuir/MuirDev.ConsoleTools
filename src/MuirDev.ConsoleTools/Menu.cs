@@ -88,7 +88,7 @@ public class Menu
     {
         var console = new FluentConsole();
 
-        options = options ?? new LogOptions();
+        options ??= new LogOptions();
         options.IsEndOfLine = true;
 
         console.LogSeparator(type, options);
@@ -109,7 +109,7 @@ public class Menu
         var left = console.CursorLeft;
         var top = console.CursorTop;
         options.IsEndOfLine = false;
-        var response = char.MinValue;
+        char response;
         do
         {
             console.SetCursorPosition(left, top).Log("Make your selection:  \b", type, options);

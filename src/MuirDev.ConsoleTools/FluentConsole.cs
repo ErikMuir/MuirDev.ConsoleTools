@@ -173,61 +173,39 @@ public class FluentConsole
     #region -- Console Wrappers --
 
     public bool IsInputRedirected => Console.IsInputRedirected;
-    public int BufferHeight { get { return Console.BufferHeight; } [SupportedOSPlatform("windows")] set { Console.BufferHeight = value; } }
-    public int BufferWidth { get { return Console.BufferWidth; } [SupportedOSPlatform("windows")] set { Console.BufferWidth = value; } }
-    [SupportedOSPlatform("windows")]
-    public bool CapsLock => Console.CapsLock;
-    public int CursorLeft { get { return Console.CursorLeft; } set { Console.CursorLeft = value; } }
-    public int CursorSize { get { return Console.CursorSize; } [SupportedOSPlatform("windows")] set { Console.CursorSize = value; } }
-    public int CursorTop { get { return Console.CursorTop; } set { Console.CursorTop = value; } }
-    public bool CursorVisible { [SupportedOSPlatform("windows")] get { return Console.CursorVisible; } set { Console.CursorVisible = value; } }
+    public int BufferHeight { get => Console.BufferHeight; }
+    public int BufferWidth { get => Console.BufferWidth; }
+    public int CursorLeft { get => Console.CursorLeft; set => Console.CursorLeft = value; }
+    public int CursorSize { get => Console.CursorSize; }
+    public int CursorTop { get => Console.CursorTop; set => Console.CursorTop = value; }
+    public bool CursorVisible { set => Console.CursorVisible = value; }
     public TextWriter Error => Console.Error;
-    public ConsoleColor ForegroundColor { get { return Console.ForegroundColor; } set { Console.ForegroundColor = value; } }
+    public ConsoleColor ForegroundColor { get => Console.ForegroundColor; set => Console.ForegroundColor = value; }
     public TextReader In => Console.In;
-    public Encoding InputEncoding { get { return Console.InputEncoding; } set { Console.InputEncoding = value; } }
+    public Encoding InputEncoding { get => Console.InputEncoding; set => Console.InputEncoding = value; }
     public bool IsErrorRedirected => Console.IsErrorRedirected;
-    public int WindowWidth { get { return Console.WindowWidth; } [SupportedOSPlatform("windows")] set { Console.WindowWidth = value; } }
+    public int WindowWidth { get => Console.WindowWidth; }
     public bool IsOutputRedirected => Console.IsOutputRedirected;
     public bool KeyAvailable => Console.KeyAvailable;
     public int LargestWindowHeight => Console.LargestWindowHeight;
     public int LargestWindowWidth => Console.LargestWindowWidth;
-    [SupportedOSPlatform("windows")]
-    public bool NumberLock => Console.NumberLock;
     public TextWriter Out => Console.Out;
-    public Encoding OutputEncoding { get { return Console.OutputEncoding; } set { Console.OutputEncoding = value; } }
-    public string Title { [SupportedOSPlatform("windows")] get { return Console.Title; } set { Console.Title = value; } }
-    public bool TreatControlCAsInput { get { return Console.TreatControlCAsInput; } set { Console.TreatControlCAsInput = value; } }
-    public int WindowHeight { get { return Console.WindowHeight; } [SupportedOSPlatform("windows")] set { Console.WindowHeight = value; } }
-    public int WindowLeft { get { return Console.WindowLeft; } [SupportedOSPlatform("windows")] set { Console.WindowLeft = value; } }
-    public int WindowTop { get { return Console.WindowTop; } [SupportedOSPlatform("windows")] set { Console.WindowTop = value; } }
-    public ConsoleColor BackgroundColor { get { return Console.BackgroundColor; } set { Console.BackgroundColor = value; } }
+    public Encoding OutputEncoding { get => Console.OutputEncoding; set => Console.OutputEncoding = value; }
+    public string Title { set => Console.Title = value; }
+    public bool TreatControlCAsInput { get => Console.TreatControlCAsInput; set => Console.TreatControlCAsInput = value; }
+    public int WindowHeight { get => Console.WindowHeight; }
+    public int WindowLeft { get => Console.WindowLeft; }
+    public int WindowTop { get => Console.WindowTop; }
+    public ConsoleColor BackgroundColor { get => Console.BackgroundColor; set => Console.BackgroundColor = value; }
 
     public FluentConsole Beep()
     {
         Console.Beep();
         return this;
     }
-    [SupportedOSPlatform("windows")]
-    public FluentConsole Beep(int frequency, int duration)
-    {
-        Console.Beep(frequency, duration);
-        return this;
-    }
     public FluentConsole Clear()
     {
         Console.Clear();
-        return this;
-    }
-    [SupportedOSPlatform("windows")]
-    public FluentConsole MoveBufferArea(int sourceLeft, int sourceTop, int sourceWidth, int sourceHeight, int targetLeft, int targetTop)
-    {
-        Console.MoveBufferArea(sourceLeft, sourceTop, sourceWidth, sourceHeight, targetLeft, targetTop);
-        return this;
-    }
-    [SupportedOSPlatform("windows")]
-    public FluentConsole MoveBufferArea(int sourceLeft, int sourceTop, int sourceWidth, int sourceHeight, int targetLeft, int targetTop, char sourceChar, ConsoleColor sourceForeColor, ConsoleColor sourceBackColor)
-    {
-        Console.MoveBufferArea(sourceLeft, sourceTop, sourceWidth, sourceHeight, targetLeft, targetTop, sourceChar, sourceForeColor, sourceBackColor);
         return this;
     }
     public Stream OpenStandardError(int bufferSize) => Console.OpenStandardError(bufferSize);
@@ -255,12 +233,6 @@ public class FluentConsole
         Console.ResetColor();
         return this;
     }
-    [SupportedOSPlatform("windows")]
-    public FluentConsole SetBufferSize(int width, int height)
-    {
-        Console.SetBufferSize(width, height);
-        return this;
-    }
     public FluentConsole SetCursorPosition(int left, int top)
     {
         Console.SetCursorPosition(left, top);
@@ -279,18 +251,6 @@ public class FluentConsole
     public FluentConsole SetOut(TextWriter newOut)
     {
         Console.SetOut(newOut);
-        return this;
-    }
-    [SupportedOSPlatform("windows")]
-    public FluentConsole SetWindowPosition(int left, int top)
-    {
-        Console.SetWindowPosition(left, top);
-        return this;
-    }
-    [SupportedOSPlatform("windows")]
-    public FluentConsole SetWindowSize(int width, int height)
-    {
-        Console.SetWindowSize(width, height);
         return this;
     }
     public FluentConsole Write(ulong value)
