@@ -1,13 +1,17 @@
 namespace MuirDev.ConsoleTools;
 
-public class TableRow
+/// <summary>
+/// Represents a row of table cells.
+/// </summary>
+public class TableRow(List<TableCell> cells)
 {
-    public TableRow(List<TableCell> tableCells)
-    {
-        TableCells = tableCells;
-    }
+    /// <summary>
+    /// The list of cells in the row.
+    /// </summary>
+    public readonly List<TableCell> Cells = cells;
 
-    private readonly List<TableCell> TableCells;
-
-    public int ColumnCount => TableCells.Count;
+    /// <summary>
+    /// The count of columns in the row.
+    /// </summary>
+    public int ColumnCount => Cells.Count;
 }
