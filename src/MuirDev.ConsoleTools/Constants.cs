@@ -3,6 +3,10 @@ namespace MuirDev.ConsoleTools;
 public static class Constants
 {
     public const char Space = ' ';
+    public const char LightShade = '░';
+    public const char MediumShade = '▒';
+    public const char DarkShade = '▓';
+    public const char FullBlock = '█';
     public const char SingleHorizontal = '─';
     public const char SingleVertical = '│';
     public const char SingleDownAndRight = '┌';
