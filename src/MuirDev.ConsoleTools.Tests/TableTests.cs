@@ -1,5 +1,6 @@
 namespace MuirDev.ConsoleTools.Tests;
 
+[Collection("Sequential")]
 public class TableTests
 {
     private static readonly TableCellConfig _redText = new() { TextColor = ConsoleColor.DarkRed };

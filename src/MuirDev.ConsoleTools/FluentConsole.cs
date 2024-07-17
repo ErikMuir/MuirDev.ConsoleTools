@@ -168,6 +168,22 @@ public class FluentConsole
         return this;
     }
 
+    /// <summary>
+    /// Returns the Console's current <c>CursorPosition</c>.
+    /// </summary>
+    public static CursorPosition GetCursorPosition() => new(Console.CursorTop, Console.CursorLeft);
+
+    /// <summary>
+    /// Sets the Console's cursor position.
+    /// </summary>
+    /// <param name="position">The <c>CursorPosition</c> to set on the Console.</param>
+    public FluentConsole SetCursorPosition(CursorPosition position)
+    {
+        CursorTop = position.Top;
+        CursorLeft = position.Left;
+        return this;
+    }
+
     #endregion
 
     #region -- Console Wrappers --

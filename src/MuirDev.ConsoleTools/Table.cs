@@ -3,7 +3,7 @@ using System.Linq;
 namespace MuirDev.ConsoleTools;
 
 /// <summary>
-/// Represents tabular data to be presented to the user.
+/// Used to display tabular data.
 /// </summary>
 public class Table(int columnCount, TableConfig config)
 {
@@ -63,7 +63,7 @@ public class Table(int columnCount, TableConfig config)
     }
 
     /// <summary>
-    /// Display the table in the console.
+    /// Display the table.
     /// </summary>
     public void Display()
     {
