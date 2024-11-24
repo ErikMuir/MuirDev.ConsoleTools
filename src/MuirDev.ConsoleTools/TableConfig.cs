@@ -31,6 +31,11 @@ public class TableConfig
     public bool ColumnBorder { get; set; }
 
     /// <summary>
+    /// Whether or not to enforce rows with equal column counts. Defaults to true.
+    /// </summary>
+    public bool EnforceEqualColumnCounts { get; set; }
+
+    /// <summary>
     /// The color to be used for borders. Defaults to current Console.ForegroundColor.
     /// </summary>
     public ConsoleColor? BorderColor { get; set; }
@@ -44,9 +49,4 @@ public class TableConfig
     /// The justification to be used for all cell content, unless overriden by the cell's config. Defaults to Left.
     /// </summary>
     public Justify? Justification { get; set; }
-
-    /// <summary>
-    /// Whether or not to enforce rows with equal column counts. Always set to true for now, but could possibly be customizable in future version.
-    /// </summary>
-    public bool EnforceEqualColumnCounts { get => true; }
 }

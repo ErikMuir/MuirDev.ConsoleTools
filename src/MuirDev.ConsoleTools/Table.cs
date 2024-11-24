@@ -11,6 +11,10 @@ public class Table
 
     private List<TableRow> _rows { get; } = [];
 
+    /// <summary>
+    /// Instantiates a Table with provided rows and provided configuration.
+    /// </summary>
+    /// <exception cref="ArgumentException">Thrown if all rows don't have the same number of columns.</exception>
     public Table(IEnumerable<TableRow> rows, TableConfig config)
     {
         _rows = rows.ToList();
@@ -18,10 +22,20 @@ public class Table
         EnforceEqualColumnCounts(rows);
     }
 
+    /// <summary>
+    /// Instantiates an empty Table with default configuration.
+    /// </summary>
     public Table() : this([], new TableConfig()) { }
 
+    /// <summary>
+    /// Instantiates a Table with provided rows and default configuration.
+    /// </summary>
+    /// <exception cref="ArgumentException">Thrown if all rows don't have the same number of columns.</exception>
     public Table(IEnumerable<TableRow> rows) : this(rows, new TableConfig()) { }
 
+    /// <summary>
+    /// Instantiates an empty Table with provided configuration.
+    /// </summary>
     public Table(TableConfig config) : this([], config) { }
 
 
@@ -36,16 +50,21 @@ public class Table
     /// </summary>
     public List<TableRow> Rows => _rows;
 
-    public int ColumnCount => _rows.Count > 0 ? _rows.Select(row => row.ColumnCount).Max() : 0;
+    /// <summary>
+    /// Returns the number of columns in the table.
+    /// </summary>
+    public int MaxColumnCount => _rows.Count > 0 ? _rows.Select(row => row.ColumnCount).Max() : 0;
 
     /// <summary>
     /// Add a single row to the table.
     /// </summary>
+    /// <exception cref="ArgumentException">Thrown if all rows don't have the same number of columns.</exception>
     public void AddRow(TableRow row) => AddRows([row]);
 
     /// <summary>
     /// Add multiple rows to the table.
     /// </summary>
+    /// <exception cref="ArgumentException">Thrown if all rows don't have the same number of columns.</exception>
     public void AddRows(IEnumerable<TableRow> rows)
     {
         EnforceEqualColumnCounts(rows);
@@ -55,6 +74,7 @@ public class Table
     /// <summary>
     /// Remove a row from the table by index.
     /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if index is less than 0 or greater than the row count minus 1.</exception> 
     public void RemoveRowAt(int index) => _rows.RemoveAt(index);
 
     /// <summary>
@@ -65,8 +85,11 @@ public class Table
     /// <summary>
     /// Clear all rows and add the provided rows to the table.
     /// </summary>
+    /// <exception cref="ArgumentException">Thrown if all rows don't have the same number of columns.</exception>
     public void SetRows(IEnumerable<TableRow> rows)
     {
+        if (Config.EnforceEqualColumnCounts && rows.Select(row => row.ColumnCount).Distinct().Count() > 1)
+            throw new ArgumentException("Rows must all have equal column counts.");
         ClearAllRows();
         AddRows(rows);
     }
@@ -92,7 +115,7 @@ public class Table
         if (!Config.EnforceEqualColumnCounts)
             return;
         if (_rows.Concat(rows).Select(row => row.ColumnCount).Distinct().Count() > 1)
-            throw new Exception("Rows must all have equal column counts.");
+            throw new ArgumentException("Rows must all have equal column counts.");
     }
 
     private int TableWidth
@@ -100,11 +123,11 @@ public class Table
         get
         {
             var tableWidth = ColumnWidths.Sum();
-            tableWidth += ColumnCount * 2;
+            tableWidth += MaxColumnCount * 2;
             if (Config.TableBorder)
                 tableWidth += 2;
             if (Config.ColumnBorder)
-                tableWidth += ColumnCount - 1;
+                tableWidth += MaxColumnCount - 1;
             return tableWidth;
         }
     }
@@ -114,14 +137,16 @@ public class Table
         get
         {
             var columnWidths = new List<int>();
-            for (var col = 0; col < ColumnCount; col++)
+            for (var iCol = 0; iCol < MaxColumnCount; iCol++)
             {
                 var maxContentLength = 0;
-                for (var row = 0; row < _rows.Count; row++)
+                for (var iRow = 0; iRow < _rows.Count; iRow++)
                 {
-                    var contentLength = _rows[row].Cells[col].Content?.Length ?? 0;
-                    if (contentLength > maxContentLength)
-                        maxContentLength = contentLength;
+                    var row = _rows[iRow];
+                    if (row.ColumnCount <= iCol) continue;
+                    var cell = row.Cells[iCol];
+                    var contentLength = cell.Content?.Length ?? 0;
+                    maxContentLength = Math.Max(contentLength, maxContentLength);
                 }
                 columnWidths.Add(maxContentLength);
             }
@@ -192,7 +217,8 @@ public class Table
             var columnBorder = $"{(isDouble ? Constants.DoubleVertical : Constants.SingleVertical)}";
             _console.Log(columnBorder, new LogOptions(Config.BorderColor ?? _console.ForegroundColor, false));
         }
-        var cell = _rows[iRow].Cells[iCol];
+        var row = _rows[iRow];
+        var cell = row.ColumnCount > iCol ? row.Cells[iCol] : new TableCell("");
         var extraPadding = width - cell.Content.Length;
         var sb = new StringBuilder();
         sb.Append(Constants.Space);

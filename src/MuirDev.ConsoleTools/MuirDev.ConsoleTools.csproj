@@ -15,8 +15,8 @@
     <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
     <PackageTags>console dotnet logging confirm menu fluent</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.3.0</Version>
-    <PackageReleaseNotes>Add a ProgressBar tool for displaying progress of potentially long-running, multi-step processes.</PackageReleaseNotes>
+    <Version>1.4.0</Version>
+    <PackageReleaseNotes>Allow table rows with different column counts; Allow initializing Table with rows.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
