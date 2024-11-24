@@ -155,7 +155,7 @@ public class ProgressBar(double whole, ProgressBarConfig config)
         var lines = 1;
         if (Config.DisplayBorder || Label.Length > 0) lines++;
         if (Config.DisplayBorder || Config.DisplayPercentage) lines++;
-        _console.SetCursorPosition(0, _console.CursorTop - lines);
+        _console.SetCursorPosition(0, Math.Max(0, _console.CursorTop - lines));
     }
 
     private void DisplayLineAbove()

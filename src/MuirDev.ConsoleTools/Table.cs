@@ -5,28 +5,38 @@ namespace MuirDev.ConsoleTools;
 /// <summary>
 /// Used to display tabular data.
 /// </summary>
-public class Table(int columnCount, TableConfig config)
+public class Table
 {
     private static readonly FluentConsole _console = new();
 
     private List<TableRow> _rows { get; } = [];
 
-    public Table(int columnCount) : this(columnCount, new TableConfig()) { }
+    public Table(IEnumerable<TableRow> rows, TableConfig config)
+    {
+        _rows = rows.ToList();
+        Config = config;
+        EnforceEqualColumnCounts(rows);
+    }
 
-    /// <summary>
-    /// The number of columns this table has.
-    /// </summary>
-    public readonly int ColumnCount = columnCount;
+    public Table() : this([], new TableConfig()) { }
+
+    public Table(IEnumerable<TableRow> rows) : this(rows, new TableConfig()) { }
+
+    public Table(TableConfig config) : this([], config) { }
+
+
 
     /// <summary>
     /// The configuration for the table.
     /// </summary>
-    public TableConfig Config = config;
+    public TableConfig Config;
 
     /// <summary>
     /// The list of rows in the table.
     /// </summary>
     public List<TableRow> Rows => _rows;
+
+    public int ColumnCount => _rows.Count > 0 ? _rows.Select(row => row.ColumnCount).Max() : 0;
 
     /// <summary>
     /// Add a single row to the table.
@@ -38,8 +48,7 @@ public class Table(int columnCount, TableConfig config)
     /// </summary>
     public void AddRows(IEnumerable<TableRow> rows)
     {
-        if (rows.Any(row => row.ColumnCount != ColumnCount))
-            throw new ArgumentException("Row column counts must equal table column count.");
+        EnforceEqualColumnCounts(rows);
         _rows.AddRange(rows);
     }
 
@@ -76,6 +85,14 @@ public class Table(int columnCount, TableConfig config)
             }
             DisplayTableBorder(isTop: false);
         });
+    }
+
+    private void EnforceEqualColumnCounts(IEnumerable<TableRow> rows = null)
+    {
+        if (!Config.EnforceEqualColumnCounts)
+            return;
+        if (_rows.Concat(rows).Select(row => row.ColumnCount).Distinct().Count() > 1)
+            throw new Exception("Rows must all have equal column counts.");
     }
 
     private int TableWidth

@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MuirDev.ConsoleTools\MuirDev.ConsoleTools.csproj" />
+    <ProjectReference Include="..\..\src\MuirDev.ConsoleTools\MuirDev.ConsoleTools.csproj" />
   </ItemGroup>
 
   <ItemGroup>

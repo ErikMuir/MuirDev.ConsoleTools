@@ -5,8 +5,10 @@ public class ProgressBarTests
 {
     private static readonly ProgressBarConfig _noDisplay = new() { Display = false };
 
-    [Fact]
-    public void ProgressBar_Update_Test()
+    [Theory]
+    [InlineData(false)]
+    // [InlineData(true)]
+    public void ProgressBar_Update_Test(bool addRandomSleepsToSimulateRealLifeScenario)
     {
         var whole = 45;
         var config = new ProgressBarConfig
@@ -24,7 +26,8 @@ public class ProgressBarTests
         do
         {
             testObject.Update(part);
-            Thread.Sleep(rnd.Next(250));
+            if (addRandomSleepsToSimulateRealLifeScenario)
+                Thread.Sleep(rnd.Next(250));
             part++;
         } while (part <= whole);
         Assert.True(true);
