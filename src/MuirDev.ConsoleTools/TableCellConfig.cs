@@ -11,6 +11,11 @@ public class TableCellConfig
     public ConsoleColor? TextColor { get; set; }
 
     /// <summary>
+    /// The background color to be used for the cell. Defaults to table configuration.
+    /// </summary>
+    public ConsoleColor? BackgroundColor { get; set; }
+
+    /// <summary>
     /// The justification to be used for cell content. Defaults to table configuration.
     /// </summary>
     public Justify? Justification { get; set; }

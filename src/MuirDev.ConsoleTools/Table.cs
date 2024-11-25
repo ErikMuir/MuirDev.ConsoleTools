@@ -163,6 +163,11 @@ public class Table
         if (isOverflow) _console.Warning(warningMessage);
     }
 
+    private ConsoleColor BorderColor => Config.BorderColor ?? _console.ForegroundColor;
+    private ConsoleColor BorderBackgroundColor => Config.BorderBackgroundColor ?? Config.BackgroundColor ?? _console.BackgroundColor;
+    private ConsoleColor TextColor => Config.TextColor ?? _console.ForegroundColor;
+    private ConsoleColor BackgroundColor => Config.BackgroundColor ?? _console.BackgroundColor;
+
     private void DisplayTableBorder(bool isTop)
     {
         if (!Config.TableBorder) return;
@@ -181,7 +186,7 @@ public class Table
             sb.Append(Constants.SingleHorizontal, columnWidths[iCol] + 2);
         }
         sb.Append(isTop ? Constants.SingleDownAndLeft : Constants.SingleUpAndLeft);
-        _console.Log(sb.ToString(), new LogOptions(Config.BorderColor ?? _console.ForegroundColor));
+        _console.Log(sb.ToString(), new LogOptions(BorderColor, BorderBackgroundColor));
     }
 
     private void DisplayRowBorder(int iRow)
@@ -206,7 +211,7 @@ public class Table
         }
         if (Config.TableBorder)
             sb.Append(isDouble ? Constants.SingleVerticalAndDoubleLeft : Constants.SingleVerticalAndLeft);
-        _console.Log(sb.ToString(), new LogOptions(Config.BorderColor ?? _console.ForegroundColor));
+        _console.Log(sb.ToString(), new LogOptions(BorderColor, BorderBackgroundColor));
     }
 
     private void DisplayCell(int iRow, int iCol, int width)
@@ -215,7 +220,7 @@ public class Table
         {
             var isDouble = Config.HasRowLabels && iCol == 1;
             var columnBorder = $"{(isDouble ? Constants.DoubleVertical : Constants.SingleVertical)}";
-            _console.Log(columnBorder, new LogOptions(Config.BorderColor ?? _console.ForegroundColor, false));
+            _console.Log(columnBorder, new LogOptions(BorderColor, BorderBackgroundColor, false));
         }
         var row = _rows[iRow];
         var cell = row.ColumnCount > iCol ? row.Cells[iCol] : new TableCell("");
@@ -241,7 +246,9 @@ public class Table
                 throw new ArgumentException("Unsupported justification.");
         }
         sb.Append(Constants.Space);
-        _console.Log(sb.ToString(), new LogOptions(cell.Config.TextColor ?? Config.TextColor ?? _console.ForegroundColor, false));
+        var color = cell.Config.TextColor ?? TextColor;
+        var background = cell.Config.BackgroundColor ?? BackgroundColor;
+        _console.Log(sb.ToString(), new LogOptions(color, background, false));
     }
 
     private void DisplayRow(int iRow)
@@ -249,7 +256,8 @@ public class Table
         DisplayRowBorder(iRow);
         var borderOptions = new LogOptions
         {
-            ForegroundColor = Config.BorderColor ?? _console.ForegroundColor,
+            ForegroundColor = BorderColor,
+            BackgroundColor = BorderBackgroundColor,
             IsEndOfLine = false,
         };
         if (Config.TableBorder)
