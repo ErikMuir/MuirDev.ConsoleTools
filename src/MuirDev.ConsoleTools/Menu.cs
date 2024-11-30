@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace MuirDev.ConsoleTools;
 
 /// <summary>
@@ -5,58 +7,42 @@ namespace MuirDev.ConsoleTools;
 /// </summary>
 public class Menu
 {
+    private static readonly FluentConsole _console = new();
     private readonly string _title;
     private readonly string _detail;
-    private readonly IDictionary<char, string> _options;
-
+    private readonly List<MenuItem> _items;
 
     /// <summary>
     /// Initializes a new instance of the <c>Menu</c> class.
     /// </summary>
-    /// <param name="options">
-    /// A dictionary of options that are displayed to the user.
-    /// Each option consists of the <c>char</c> used to select it and its <c>string</c> description.
+    /// <param name="items">
+    /// A list of menu items that are displayed to the user.
     /// </param>
-    public Menu(IDictionary<char, string> options)
-    {
-        if (options.Count <= 1)
-            throw new ArgumentException("Menus must contain at least 2 options.");
-
-        _options = options;
-    }
+    public Menu(List<MenuItem> items) : this(items, null, null) { }
 
     /// <summary>
     /// Initializes a new instance of the <c>Menu</c> class.
     /// </summary>
-    /// <param name="options">
-    /// A dictionary of options that are displayed to the user.
-    /// Each option consists of the <c>char</c> used to select it and its <c>string</c> description.
+    /// <param name="items">
+    /// A list of menu items that are displayed to the user.
     /// </param>
     /// <param name="title">The menu's title that is displayed at the top of the menu.</param>
-    public Menu(IDictionary<char, string> options, string title)
-    {
-        if (options.Count < 2)
-            throw new ArgumentException("Menus must contain at least 2 options.");
-
-        _options = options;
-        _title = title;
-    }
+    public Menu(List<MenuItem> items, string title) : this(items, title, null) { }
 
     /// <summary>
     /// Initializes a new instance of the <c>Menu</c> class.
     /// </summary>
-    /// <param name="options">
-    /// A dictionary of options that are displayed to the user.
-    /// Each option consists of the <c>char</c> used to select it and its <c>string</c> description.
+    /// <param name="items">
+    /// A list of menu items that are displayed to the user.
     /// </param>
     /// <param name="title">The menu's title that is displayed at the top of the menu.</param>
-    /// <param name="detail">Any details related to the menu that are displayed between the title and options.</param>
-    public Menu(IDictionary<char, string> options, string title, string detail)
+    /// <param name="detail">Any details related to the menu that are displayed between the title and items.</param>
+    public Menu(List<MenuItem> items, string title, string detail)
     {
-        if (options.Count < 2)
+        if (items.Count < 2)
             throw new ArgumentException("Menus must contain at least 2 options.");
 
-        _options = options;
+        _items = items;
         _title = title;
         _detail = detail;
     }
@@ -65,58 +51,54 @@ public class Menu
     /// <summary>
     /// Displays the menu, prompts the user for a response, and returns the response.
     /// </summary>
-    public char Run() => Run(LogType.Info, new LogOptions());
+    public char Run() => Run(new LogOptions());
 
     /// <summary>
     /// Displays the menu, prompts the user for a response, and returns the response.
     /// </summary>
-    /// <param name="type">The log type of the menu.</param>
-    public char Run(LogType type) => Run(type, new LogOptions());
-
-    /// <summary>
-    /// Displays the menu, prompts the user for a response, and returns the response.
-    /// </summary>
-    /// <param name="options">Log options to override default logging behavior.</param>
-    public char Run(LogOptions options) => Run(LogType.Info, options);
-
-    /// <summary>
-    /// Displays the menu, prompts the user for a response, and returns the response.
-    /// </summary>
-    /// <param name="type">The log type of the menu.</param>
-    /// <param name="options">Log options to override default logging behavior.</param>
-    public char Run(LogType type, LogOptions options)
+    /// <param name="options">Log options to customize logging behavior.</param>
+    public char Run(LogOptions options)
     {
-        var console = new FluentConsole();
-
+        var type = LogType.Info;
         options ??= new LogOptions();
         options.IsEndOfLine = true;
 
-        console.LogSeparator(type, options);
+        _console.LogSeparator(type, options);
         if (!string.IsNullOrWhiteSpace(_title))
         {
-            console.Log($" {_title}", type, options).LogSeparator(type, options);
+            _console.Log($" {_title}", type, options).LogSeparator(type, options);
         }
         if (!string.IsNullOrWhiteSpace(_detail))
         {
-            console.Log(_detail, type, options).WriteLine();
+            _console.Log(_detail, type, options).WriteLine();
         }
-        foreach (KeyValuePair<char, string> option in _options)
+        foreach (var option in _items)
         {
-            console.Log($"  {option.Key} - {option.Value}", type, options);
+            _console.Log($"  {option.Char} - {option.Name}", type, options);
         }
-        console.LogSeparator(type, options).WriteLine();
+        _console.LogSeparator(type, options).WriteLine();
 
-        var left = console.CursorLeft;
-        var top = console.CursorTop;
+        var left = _console.CursorLeft;
+        var top = _console.CursorTop;
         options.IsEndOfLine = false;
-        char response;
-        do
+        while (true)
         {
-            console.SetCursorPosition(left, top).Log("Make your selection:  \b", type, options);
-            response = console.ReadKey().KeyChar;
-        } while (!_options.ContainsKey(response));
-        console.WriteLine();
-
-        return response;
+            var response = _console
+                .SetCursorPosition(left, top)
+                .Log("Make your selection:  \b", type, options)
+                .ReadKey()
+                .KeyChar;
+            var chosenOption = _items.SingleOrDefault(o => o.Char == response);
+            if (chosenOption is null)
+            {
+                _console.Beep();
+            }
+            else
+            {
+                _console.LineFeed();
+                chosenOption.Action();
+                return response;
+            }
+        }
     }
 }
