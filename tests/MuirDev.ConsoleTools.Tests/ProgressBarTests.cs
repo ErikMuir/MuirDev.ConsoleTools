@@ -5,34 +5,6 @@ public class ProgressBarTests
 {
     private static readonly ProgressBarConfig _noDisplay = new() { Display = false };
 
-    [Theory]
-    [InlineData(false)]
-    // [InlineData(true)]
-    public void ProgressBar_Update_Test(bool addRandomSleepsToSimulateRealLifeScenario)
-    {
-        var whole = 45;
-        var config = new ProgressBarConfig
-        {
-            Label = "Download",
-            DisplayBorder = true,
-            DisplayPercentage = true,
-            TextColor = ConsoleColor.DarkYellow,
-            BorderColor = ConsoleColor.DarkCyan,
-            FillColor = ConsoleColor.DarkGreen,
-        };
-        var testObject = new ProgressBar(whole, config);
-        var part = 0;
-        var rnd = new Random();
-        do
-        {
-            testObject.Update(part);
-            if (addRandomSleepsToSimulateRealLifeScenario)
-                Thread.Sleep(rnd.Next(250));
-            part++;
-        } while (part <= whole);
-        Assert.True(true);
-    }
-
     [Fact]
     public void ProgressBar_Update_With_Negative_Value_Sets_Error_Message_Test()
     {

@@ -164,7 +164,6 @@ public class Table
     }
 
     private ConsoleColor BorderColor => Config.BorderColor ?? _console.ForegroundColor;
-    private ConsoleColor BorderBackgroundColor => Config.BorderBackgroundColor ?? Config.BackgroundColor ?? _console.BackgroundColor;
     private ConsoleColor TextColor => Config.TextColor ?? _console.ForegroundColor;
     private ConsoleColor BackgroundColor => Config.BackgroundColor ?? _console.BackgroundColor;
 
@@ -186,7 +185,7 @@ public class Table
             sb.Append(Constants.SingleHorizontal, columnWidths[iCol] + 2);
         }
         sb.Append(isTop ? Constants.SingleDownAndLeft : Constants.SingleUpAndLeft);
-        _console.Log(sb.ToString(), new LogOptions(BorderColor, BorderBackgroundColor));
+        _console.Log(sb.ToString(), new LogOptions(BorderColor, BackgroundColor));
     }
 
     private void DisplayRowBorder(int iRow)
@@ -211,7 +210,7 @@ public class Table
         }
         if (Config.TableBorder)
             sb.Append(isDouble ? Constants.SingleVerticalAndDoubleLeft : Constants.SingleVerticalAndLeft);
-        _console.Log(sb.ToString(), new LogOptions(BorderColor, BorderBackgroundColor));
+        _console.Log(sb.ToString(), new LogOptions(BorderColor, BackgroundColor));
     }
 
     private void DisplayCell(int iRow, int iCol, int width)
@@ -220,7 +219,7 @@ public class Table
         {
             var isDouble = Config.HasRowLabels && iCol == 1;
             var columnBorder = $"{(isDouble ? Constants.DoubleVertical : Constants.SingleVertical)}";
-            _console.Log(columnBorder, new LogOptions(BorderColor, BorderBackgroundColor, false));
+            _console.Log(columnBorder, new LogOptions(BorderColor, BackgroundColor, false));
         }
         var row = _rows[iRow];
         var cell = row.ColumnCount > iCol ? row.Cells[iCol] : new TableCell("");
@@ -246,29 +245,25 @@ public class Table
                 throw new ArgumentException("Unsupported justification.");
         }
         sb.Append(Constants.Space);
-        var color = cell.Config.TextColor ?? TextColor;
-        var background = cell.Config.BackgroundColor ?? BackgroundColor;
-        _console.Log(sb.ToString(), new LogOptions(color, background, false));
+        var textColor = cell.Config.TextColor ?? TextColor;
+        var backgroundColor = cell.Config.BackgroundColor ?? BackgroundColor;
+        _console.Log(sb.ToString(), new LogOptions(textColor, backgroundColor, false));
     }
 
     private void DisplayRow(int iRow)
     {
         DisplayRowBorder(iRow);
-        var borderOptions = new LogOptions
-        {
-            ForegroundColor = BorderColor,
-            BackgroundColor = BorderBackgroundColor,
-            IsEndOfLine = false,
-        };
+        var singleVertical = $"{Constants.SingleVertical}";
+        var borderOptions = new LogOptions(BorderColor, BackgroundColor, false);
         if (Config.TableBorder)
-            _console.Log(Constants.SingleVertical.ToString(), borderOptions);
+            _console.Log(singleVertical, borderOptions);
         var columnWidths = ColumnWidths;
         for (var iCol = 0; iCol < columnWidths.Count; iCol++)
         {
             DisplayCell(iRow, iCol, columnWidths[iCol]);
         }
         if (Config.TableBorder)
-            _console.Log(Constants.SingleVertical.ToString(), borderOptions);
+            _console.Log(singleVertical, borderOptions);
         _console.Log("");
     }
 }

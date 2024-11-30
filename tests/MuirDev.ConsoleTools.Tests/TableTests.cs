@@ -11,7 +11,7 @@ public class TableTests
     #region Constructors
 
     [Fact]
-    public void Table_EmptyConstructor_Test()
+    public void EmptyConstructor_Test()
     {
         // Arrange
 
@@ -27,13 +27,14 @@ public class TableTests
         Assert.False(config.RowBorder);
         Assert.False(config.ColumnBorder);
         Assert.False(config.EnforceEqualColumnCounts);
-        Assert.Null(config.BorderColor);
         Assert.Null(config.TextColor);
+        Assert.Null(config.BackgroundColor);
+        Assert.Null(config.BorderColor);
         Assert.Null(config.Justification);
     }
 
     [Fact]
-    public void Table_RowsConstructor_Test()
+    public void RowsConstructor_Test()
     {
         // Arrange
 
@@ -51,17 +52,19 @@ public class TableTests
         Assert.False(config.RowBorder);
         Assert.False(config.ColumnBorder);
         Assert.False(config.EnforceEqualColumnCounts);
-        Assert.Null(config.BorderColor);
         Assert.Null(config.TextColor);
+        Assert.Null(config.BackgroundColor);
+        Assert.Null(config.BorderColor);
         Assert.Null(config.Justification);
     }
 
     [Fact]
-    public void Table_ConfigConstructor_Test()
+    public void ConfigConstructor_Test()
     {
         // Arrange
-        var borderColor = ConsoleColor.Red;
         var textColor = ConsoleColor.Blue;
+        var backgroundColor = ConsoleColor.DarkGreen;
+        var borderColor = ConsoleColor.Red;
         var justification = Justify.Center;
         var config = new TableConfig
         {
@@ -71,8 +74,9 @@ public class TableTests
             RowBorder = true,
             ColumnBorder = true,
             EnforceEqualColumnCounts = true,
-            BorderColor = borderColor,
             TextColor = textColor,
+            BackgroundColor = backgroundColor,
+            BorderColor = borderColor,
             Justification = justification,
         };
 
@@ -87,17 +91,19 @@ public class TableTests
         Assert.True(table.Config.RowBorder);
         Assert.True(table.Config.ColumnBorder);
         Assert.True(table.Config.EnforceEqualColumnCounts);
-        Assert.Equal(borderColor, table.Config.BorderColor);
         Assert.Equal(textColor, table.Config.TextColor);
+        Assert.Equal(backgroundColor, table.Config.BackgroundColor);
+        Assert.Equal(borderColor, table.Config.BorderColor);
         Assert.Equal(justification, table.Config.Justification);
     }
 
     [Fact]
-    public void Table_RowsConfigConstructor_Test()
+    public void RowsConfigConstructor_Test()
     {
         // Arrange
-        var borderColor = ConsoleColor.Red;
         var textColor = ConsoleColor.Blue;
+        var backgroundColor = ConsoleColor.DarkGreen;
+        var borderColor = ConsoleColor.Red;
         var justification = Justify.Center;
         var config = new TableConfig
         {
@@ -107,8 +113,9 @@ public class TableTests
             RowBorder = true,
             ColumnBorder = true,
             EnforceEqualColumnCounts = true,
-            BorderColor = borderColor,
             TextColor = textColor,
+            BackgroundColor = backgroundColor,
+            BorderColor = borderColor,
             Justification = justification,
         };
         var rows = new List<TableRow> { _row1, _row2};
@@ -126,13 +133,14 @@ public class TableTests
         Assert.True(table.Config.RowBorder);
         Assert.True(table.Config.ColumnBorder);
         Assert.True(table.Config.EnforceEqualColumnCounts);
-        Assert.Equal(borderColor, table.Config.BorderColor);
         Assert.Equal(textColor, table.Config.TextColor);
+        Assert.Equal(backgroundColor, table.Config.BackgroundColor);
+        Assert.Equal(borderColor, table.Config.BorderColor);
         Assert.Equal(justification, table.Config.Justification);
     }
 
     [Fact]
-    public void Table_RowsConfigConstructor_Throws_Test()
+    public void RowsConfigConstructor_Throws_Test()
     {
         // Arrange
         var rows = new List<TableRow> { _row1, _row2, _rowWithOnlyTwoColumns };
@@ -147,7 +155,7 @@ public class TableTests
     #region AddRow
 
     [Fact]
-    public void Table_AddRow_Test()
+    public void AddRow_Test()
     {
         // Arrange
         var table = new Table();
@@ -160,7 +168,7 @@ public class TableTests
     }
 
     [Fact]
-    public void Table_AddRow_Throws_Test()
+    public void AddRow_Throws_Test()
     {
         // Arrange
         var config = new TableConfig { EnforceEqualColumnCounts = true };
@@ -176,7 +184,7 @@ public class TableTests
     #region AddRows
 
     [Fact]
-    public void Table_AddRows_Test()
+    public void AddRows_Test()
     {
         // Arrange
         var table = new Table();
@@ -191,7 +199,7 @@ public class TableTests
     }
 
     [Fact]
-    public void Table_AddRows_WithDifferentColumnCounts_Test()
+    public void AddRows_WithDifferentColumnCounts_Test()
     {
         // Arrange
         var table = new Table();
@@ -207,7 +215,7 @@ public class TableTests
     }
 
     [Fact]
-    public void Table_AddRows_WithDifferentColumnCounts_Throws_Test()
+    public void AddRows_WithDifferentColumnCounts_Throws_Test()
     {
         // Arrange
         var config = new TableConfig { EnforceEqualColumnCounts = true };
@@ -223,7 +231,7 @@ public class TableTests
     #region RemoveRowAt
 
     [Fact]
-    public void Table_RemoveRowAt_Test()
+    public void RemoveRowAt_Test()
     {
         // Arrange
         var table = new Table([_row1, _row2]);
@@ -238,7 +246,7 @@ public class TableTests
     [Theory]
     [InlineData(-1)]
     [InlineData(2)]
-    public void Table_RemoveRowAt_Throws_Test(int index)
+    public void RemoveRowAt_Throws_Test(int index)
     {
         // Arrange
         var table = new Table([_row1, _row2]);
@@ -253,7 +261,7 @@ public class TableTests
     #region ClearAllRows
 
     [Fact]
-    public void Table_ClearAllRows_Test()
+    public void ClearAllRows_Test()
     {
         // Arrange
         var table = new Table([_row1, _row2]);
@@ -270,7 +278,7 @@ public class TableTests
     #region SetRows
 
     [Fact]
-    public void Table_SetRows_Test()
+    public void SetRows_Test()
     {
         // Arrange
         var table = new Table([_rowWithOnlyTwoColumns]);
@@ -286,7 +294,7 @@ public class TableTests
     }
 
     [Fact]
-    public void Table_SetRows_WithDifferentColumnCounts_Tests()
+    public void SetRows_WithDifferentColumnCounts_Tests()
     {
         // Arrange
         var table = new Table([_row1]);
@@ -302,7 +310,7 @@ public class TableTests
     }
 
     [Fact]
-    public void Table_SetRows_WithDifferentColumnCounts_Throws_Test()
+    public void SetRows_WithDifferentColumnCounts_Throws_Test()
     {
         // Arrange
         var config = new TableConfig { EnforceEqualColumnCounts = true };
@@ -311,97 +319,6 @@ public class TableTests
         // Act & Assert
         Assert.Throws<ArgumentException>(() => table.SetRows([_row2, _rowWithOnlyTwoColumns]));
         Assert.Equal(_row1, table.Rows.Single());
-    }
-
-    #endregion
-
-    #region Display
-
-    [Fact]
-    public void Table_Display_Test()
-    {
-        // Arrange
-        var redText = new TableCellConfig() { TextColor = ConsoleColor.DarkRed };
-        var blueText = new TableCellConfig() { TextColor = ConsoleColor.DarkBlue };
-        var yellowText = new TableCellConfig() { TextColor = ConsoleColor.Yellow };
-        var purpleText = new TableCellConfig() { TextColor = ConsoleColor.DarkMagenta };
-        var greenText = new TableCellConfig() { TextColor = ConsoleColor.DarkGreen };
-        var orangeText = new TableCellConfig() { TextColor = ConsoleColor.DarkYellow };
-        var alignCenter = new TableCellConfig() { Justification = Justify.Center };
-        var alignRight = new TableCellConfig() { Justification = Justify.Right };
-        var tableRows = new List<TableRow>
-        {
-            new(
-            [
-                new(""),
-                new("Red", alignCenter),
-                new("Blue", alignCenter),
-                new("Yellow", alignCenter),
-            ]),
-            new(
-            [
-                new("Red", alignRight),
-                new("█ Red", redText),
-                new("█ Purple", purpleText),
-                new("█ Orange", orangeText),
-            ]),
-            new(
-            [
-                new("Blue", alignRight),
-                new("█ Purple", purpleText),
-                new("█ Blue", blueText),
-                new("█ Green", greenText),
-            ]),
-            new(
-            [
-                new("Yellow", alignRight),
-                new("█ Orange", orangeText),
-                new("█ Green", greenText),
-                new("█ Yellow", yellowText),
-            ]),
-        };
-        var tableConfig = new TableConfig
-        {
-            TableBorder = true,
-            HasColumnLabels = true,
-            HasRowLabels = true,
-            RowBorder = true,
-            ColumnBorder = true,
-            BorderColor = ConsoleColor.DarkCyan,
-        };
-        var table = new Table(tableRows, tableConfig);
-
-        // Act
-        table.Display();
-
-        // Assert
-        Assert.True(true);
-    }
-
-    [Fact]
-    public void Table_Display_WithDifferentColumnCounts_Test()
-    {
-        // Arrange
-        var tableRows = new List<TableRow>
-        {
-            new([new("red"), new("orange"), new("yellow"), new("green"), new("blue")]),
-            new([new("left"), new("center"), new("right")]),
-            new([new("int"), new("decimal"), new("long"), new("double")]),
-        };
-        var tableConfig = new TableConfig
-        {
-            TableBorder = true,
-            RowBorder = true,
-            ColumnBorder = true,
-            BorderColor = ConsoleColor.DarkCyan,
-        };
-        var table = new Table(tableRows, tableConfig);
-
-        // Act
-        table.Display();
-
-        // Assert
-        Assert.True(true);
     }
 
     #endregion

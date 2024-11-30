@@ -36,16 +36,6 @@ public class TableConfig
     public bool EnforceEqualColumnCounts { get; set; }
 
     /// <summary>
-    /// The color to be used for borders. Defaults to current Console.ForegroundColor.
-    /// </summary>
-    public ConsoleColor? BorderColor { get; set; }
-
-    /// <summary>
-    /// The background color to be used for borders. Defaults to this.BackgroundColor.
-    /// </summary>
-    public ConsoleColor? BorderBackgroundColor { get; set; }
-
-    /// <summary>
     /// The color to be used for all cell content, unless everriden by the cell's config. Defaults to current Console.ForegroundColor.
     /// </summary>
     public ConsoleColor? TextColor { get; set; }
@@ -54,6 +44,11 @@ public class TableConfig
     /// The background color to be used for all cells, unless overriden by the cell's config. Defaults to current Console.BackgroundColor.
     /// </summary>
     public ConsoleColor? BackgroundColor { get; set; }
+
+    /// <summary>
+    /// The color to be used for borders. Defaults to current Console.ForegroundColor.
+    /// </summary>
+    public ConsoleColor? BorderColor { get; set; }
 
     /// <summary>
     /// The justification to be used for all cell content, unless overriden by the cell's config. Defaults to Left.
