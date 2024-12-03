@@ -1,18 +1,18 @@
 namespace MuirDev.ConsoleTools.Tests;
 
-public static partial class Examples
+public static class TableFixedDemo
 {
-    public static void FixedColumnCount()
+    public static void Run()
     {
-        var redText = new TableCellConfig() { TextColor = ConsoleColor.DarkRed };
-        var blueText = new TableCellConfig() { TextColor = ConsoleColor.DarkBlue };
-        var yellowText = new TableCellConfig() { TextColor = ConsoleColor.Yellow };
-        var purpleText = new TableCellConfig() { TextColor = ConsoleColor.DarkMagenta };
-        var greenText = new TableCellConfig() { TextColor = ConsoleColor.DarkGreen };
-        var orangeText = new TableCellConfig() { TextColor = ConsoleColor.DarkYellow };
-        var alignCenter = new TableCellConfig() { Justification = Justify.Center };
-        var alignRight = new TableCellConfig() { Justification = Justify.Right };
-        var tableRows = new List<TableRow>
+        var redText = new TableCellConfig { TextColor = ConsoleColor.DarkRed };
+        var blueText = new TableCellConfig { TextColor = ConsoleColor.DarkBlue };
+        var yellowText = new TableCellConfig { TextColor = ConsoleColor.Yellow };
+        var purpleText = new TableCellConfig { TextColor = ConsoleColor.DarkMagenta };
+        var greenText = new TableCellConfig { TextColor = ConsoleColor.DarkGreen };
+        var orangeText = new TableCellConfig { TextColor = ConsoleColor.DarkYellow };
+        var alignCenter = new TableCellConfig { Justification = Justify.Center };
+        var alignRight = new TableCellConfig { Justification = Justify.Right };
+        var rows = new List<TableRow>
         {
             new(
             [
@@ -43,17 +43,14 @@ public static partial class Examples
                 new("█ Yellow", yellowText),
             ]),
         };
-        var tableConfig = new TableConfig
+        var config = new TableConfig
         {
             TableBorder = true,
-            HasColumnLabels = true,
-            HasRowLabels = true,
             RowBorder = true,
             ColumnBorder = true,
             BorderColor = ConsoleColor.DarkCyan,
         };
-        var table = new Table(tableRows, tableConfig);
+        var table = new Table(rows, config);
         table.Display();
-        Console.WriteLine();
     }
 }

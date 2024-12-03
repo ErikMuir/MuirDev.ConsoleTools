@@ -46,9 +46,15 @@ public class FluentConsole
     }
 
     /// <summary>
-    /// Sets the colors of the console output based on the desired log type.
+    /// Sets the colors of the console output based on the provided colors.
     /// </summary>
-    public FluentConsole SetColor() => SetColor(LogType.Info, new LogOptions());
+    public FluentConsole SetColor(ConsoleColor foreground, ConsoleColor? background = null)
+    {
+        ForegroundColor = foreground;
+        if (background.HasValue)
+            BackgroundColor = background.Value;
+        return this;
+    }
 
     /// <summary>
     /// Sets the colors of the console output based on the desired log type.

@@ -5,12 +5,13 @@ namespace MuirDev.ConsoleTools;
 /// </summary>
 public class Confirm
 {
+    private static readonly FluentConsole _console = new();
     private readonly string _question;
     private readonly Dictionary<ConsoleKey, bool> _allowedResponses;
 
 
     /// <summary>
-    /// Initializes a new instance of the <c>Menu</c> class.
+    /// Initializes a new instance of the <c>Confirm</c> class.
     /// </summary>
     /// <param name="question">The question to be output to the console.</param>
     /// <exception cref="System.ArgumentException">Throws when <c>question</c> is null or whitespace.</exception>
@@ -81,15 +82,14 @@ public class Confirm
     /// <param name="options">Log options to override default logging behavior.</param>
     public bool Run(LogType type, LogOptions options)
     {
-        var console = new FluentConsole();
         options ??= new LogOptions();
         options.IsEndOfLine = false;
         ConsoleKey response;
         do
         {
-            console.Log(_question, type, options);
-            response = console.ReadKey(false).Key;
-            console.WriteLine();
+            _console.Log(_question, type, options);
+            response = _console.ReadKey(false).Key;
+            _console.LineFeed();
         } while (!_allowedResponses.ContainsKey(response));
         return _allowedResponses[response];
     }

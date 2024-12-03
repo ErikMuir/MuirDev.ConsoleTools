@@ -1,5 +1,3 @@
-using System.Linq;
-
 namespace MuirDev.ConsoleTools;
 
 /// <summary>
@@ -10,24 +8,7 @@ public class Menu
     private static readonly FluentConsole _console = new();
     private readonly string _title;
     private readonly string _detail;
-    private readonly List<MenuItem> _items;
-
-    /// <summary>
-    /// Initializes a new instance of the <c>Menu</c> class.
-    /// </summary>
-    /// <param name="items">
-    /// A list of menu items that are displayed to the user.
-    /// </param>
-    public Menu(List<MenuItem> items) : this(items, null, null) { }
-
-    /// <summary>
-    /// Initializes a new instance of the <c>Menu</c> class.
-    /// </summary>
-    /// <param name="items">
-    /// A list of menu items that are displayed to the user.
-    /// </param>
-    /// <param name="title">The menu's title that is displayed at the top of the menu.</param>
-    public Menu(List<MenuItem> items, string title) : this(items, title, null) { }
+    private readonly IDictionary<char, MenuItem> _items;
 
     /// <summary>
     /// Initializes a new instance of the <c>Menu</c> class.
@@ -37,15 +18,32 @@ public class Menu
     /// </param>
     /// <param name="title">The menu's title that is displayed at the top of the menu.</param>
     /// <param name="detail">Any details related to the menu that are displayed between the title and items.</param>
-    public Menu(List<MenuItem> items, string title, string detail)
+    public Menu(IDictionary<char, MenuItem> items, string title, string detail)
     {
         if (items.Count < 2)
-            throw new ArgumentException("Menus must contain at least 2 options.");
+            throw new ArgumentException("Menus must contain at least 2 items.");
 
         _items = items;
         _title = title;
         _detail = detail;
     }
+
+    /// <summary>
+    /// Initializes a new instance of the <c>Menu</c> class.
+    /// </summary>
+    /// <param name="items">
+    /// A list of menu items that are displayed to the user.
+    /// </param>
+    public Menu(IDictionary<char, MenuItem> items) : this(items, null, null) { }
+
+    /// <summary>
+    /// Initializes a new instance of the <c>Menu</c> class.
+    /// </summary>
+    /// <param name="items">
+    /// A list of menu items that are displayed to the user.
+    /// </param>
+    /// <param name="title">The menu's title that is displayed at the top of the menu.</param>
+    public Menu(IDictionary<char, MenuItem> items, string title) : this(items, title, null) { }
 
 
     /// <summary>
@@ -72,9 +70,9 @@ public class Menu
         {
             _console.Log(_detail, type, options).WriteLine();
         }
-        foreach (var option in _items)
+        foreach (var keyValuePair in _items)
         {
-            _console.Log($"  {option.Char} - {option.Name}", type, options);
+            _console.Log($"  {keyValuePair.Key} - {keyValuePair.Value.Label}", type, options);
         }
         _console.LogSeparator(type, options).WriteLine();
 
@@ -88,7 +86,7 @@ public class Menu
                 .Log("Make your selection:  \b", type, options)
                 .ReadKey()
                 .KeyChar;
-            var chosenOption = _items.SingleOrDefault(o => o.Char == response);
+            _items.TryGetValue(response, out var chosenOption);
             if (chosenOption is null)
             {
                 _console.Beep();
@@ -96,7 +94,8 @@ public class Menu
             else
             {
                 _console.LineFeed();
-                chosenOption.Action();
+                if (chosenOption.Action is not null)
+                    chosenOption.Action();
                 return response;
             }
         }

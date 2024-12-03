@@ -161,7 +161,7 @@ public class ProgressBar(double whole, ProgressBarConfig config)
     private void DisplayLineAbove()
     {
         if (!Config.DisplayBorder && Label.Length == 0) return;
-        if (Config.DisplayBorder) _console.Log(Constants.SingleDownAndRight.ToString(), BorderOptions);
+        if (Config.DisplayBorder) _console.Log($"{Constants.SingleDownAndRight}", BorderOptions);
         if (Label.Length > 0) _console.Log(Label, TextOptions);
         if (Config.DisplayBorder)
         {

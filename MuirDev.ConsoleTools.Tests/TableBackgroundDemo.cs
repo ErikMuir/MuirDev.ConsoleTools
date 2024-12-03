@@ -1,8 +1,8 @@
 namespace MuirDev.ConsoleTools.Tests;
 
-public static partial class Examples
+public static class TableBackgroundDemo
 {
-    public static void AmericanFlag()
+    public static void Run()
     {
         var stars = new TableCellConfig { BackgroundColor = ConsoleColor.DarkBlue };
         var redStripe = new TableCellConfig { BackgroundColor = ConsoleColor.DarkRed };
@@ -26,6 +26,5 @@ public static partial class Examples
         var config = new TableConfig { TextColor = ConsoleColor.White };
         var table = new Table(rows, config);
         table.Display();
-        Console.WriteLine();
     }
 }

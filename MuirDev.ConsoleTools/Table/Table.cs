@@ -1,5 +1,3 @@
-using System.Linq;
-
 namespace MuirDev.ConsoleTools;
 
 /// <summary>

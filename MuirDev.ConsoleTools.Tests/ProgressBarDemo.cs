@@ -1,8 +1,8 @@
 namespace MuirDev.ConsoleTools.Tests;
 
-public static partial class Examples
+public static class ProgressBarDemo
 {
-    public static void ProgressBar()
+    public static void Run()
     {
         bool addRandomSleepsToSimulateRealLifeScenario = true;
         var whole = 45;
@@ -15,16 +15,16 @@ public static partial class Examples
             BorderColor = ConsoleColor.DarkCyan,
             FillColor = ConsoleColor.DarkGreen,
         };
-        var testObject = new ProgressBar(whole, config);
+        var downloadStatus = new ConsoleTools.ProgressBar(whole, config);
         var part = 0;
         var rnd = new Random();
+
         do
         {
-            testObject.Update(part);
+            downloadStatus.Update(part);
             if (addRandomSleepsToSimulateRealLifeScenario)
                 Thread.Sleep(rnd.Next(250));
             part++;
         } while (part <= whole);
-        Console.WriteLine();
     }
 }
